@@ -1,0 +1,56 @@
+{
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+        "aws_source_ami": "{{env `AWS_SOURCE_AMI`}}",
+        "aws_region": "{{env `AWS_REGION`}}"
+    },
+    "builders": [
+        {
+            "access_key": "{{user `aws_access_key`}}",
+            "ami_name": "ubuntu_1604-go-docker-cmdserver-{{timestamp}}",
+            "instance_type": "t2.micro",
+            "region": "{{user `aws_region`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "source_ami": "{{user `aws_source_ami`}}",
+            "ssh_username": "ubuntu",
+            "type": "amazon-ebs"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+              "sleep 30",
+              "sudo apt-get update",
+              "wget https://dl.google.com/go/go1.12.2.linux-amd64.tar.gz",
+              "sudo tar -xvf go1.12.2.linux-amd64.tar.gz",
+              "sudo mv go /usr/local",
+              "echo 'export PATH=/usr/local/go/bin:$PATH' >>~/.profile",
+              "rm go1.12.2.linux-amd64.tar.gz"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+              "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add",
+              "sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\"",
+              "sudo apt-get update",
+              "sudo apt-get install -y docker-ce",
+              "sudo usermod -aG docker $USER"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+              "sudo curl -L \"https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
+              "sudo chmod +x /usr/local/bin/docker-compose"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "./server.go",
+            "destination": "/home/ubuntu/"
+        }
+    ]
+}
