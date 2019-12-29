@@ -30,6 +30,11 @@ RUN chmod +x /go/bin/terraform
 RUN curl -L -s https://github.com/hairyhenderson/gomplate/releases/download/v3.5.0/gomplate_linux-amd64 -o /go/bin/gomplate
 RUN chmod +x /go/bin/gomplate
 
+# Packer
+RUN curl -L -s https://releases.hashicorp.com/packer/1.5.1/packer_1.5.1_linux_amd64.zip -o /go/bin/packer.zip
+RUN unzip /go/bin/packer.zip -d /go/bin
+RUN chmod +x /go/bin/packer
+
 # Python
 RUN apt-get update && apt-get install -y python3-pip python3-dev && cd /usr/local/bin && ln -s /usr/bin/python3 python && pip3 install --upgrade pip
 
@@ -40,6 +45,7 @@ ENV PATH="~/.local/bin:${PATH}"
 # Resource Core Files
 ADD client /root
 ADD test /root
+ADD ec2-server /root
 RUN chmod +x /root/*.sh
 
 

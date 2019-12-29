@@ -1,3 +1,5 @@
+
+```shell script
 cd ~
 export AWS_ACCESS_KEY_ID=$aws_access_key
 export AWS_SECRET_ACCESS_KEY=$aws_secret_access_key
@@ -18,3 +20,4 @@ export SECURITY_GROUP=$(terraform output -json | jq -r '.security_group.value'  
 export INSTANCE_ID=$(terraform output -json | jq -r '.instance_id.value'  )
 aws ec2 authorize-security-group-ingress --group-name $SECURITY_GROUP --protocol tcp --port 8081 --cidr $LOCAL_IP/32
 go run client.go $INSTANCE_IP:8081 'ls'
+```
