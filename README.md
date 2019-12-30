@@ -50,8 +50,8 @@ To create a new AMI out of the latest Amazon Linux AMI, and install the server.g
 ```shell script
 docker run -it $(docker build -q .)
 cd ~
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
+export AWS_ACCESS_KEY_ID=AKIATVPVOWKX2HQFBYVC
+export AWS_SECRET_ACCESS_KEY=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
 export AWS_SOURCE_AMI=ami-0565af6e282977273
 export AWS_REGION=us-east-1
 packer build packer_template.json
