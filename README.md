@@ -7,9 +7,9 @@ This terraform project creates an Ec2 worker to run bash commands from a remote 
 
 # Quick start
 
-* Create a new terraform state S3 bucket using the [instructions below](#Create terraform state s3 bucket)
+* Create a new terraform state S3 bucket using the [instructions below](#create-terraform-state-s3-bucket)
 * Edit the ./test/terraform.tf to update the bucket = "<S3_BUCKET_NAME>" value 
-* Optional - Create a new AMI image using the [instructions below](#Create custom AMI using Packer)
+* Optional - Create a new AMI image using the [instructions below](#create-custom-ami-using-packer)
 * Test using the instruction below
 
 ```shell script
