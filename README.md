@@ -15,9 +15,12 @@ This terraform project creates an Ec2 worker to run bash commands from a remote 
 ```shell script
 docker run -it $(docker build -q .)
 cd ~
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_DEFAULT_REGION=us-east-1
 terraform init
 export aws_ami_id=ami-0ec6d71f90a4daad0
-export git_access_token=ea56ecae380446594ef937a5ac0c1f3a9c2166bc
+export git_access_token=
 terraform apply -auto-approve -var "git_access_token=$store_git_access_token" -var "ami_id=$aws_ami_id"
 export LOCAL_IP=$(curl http://ipv4.icanhazip.com)
 export INSTANCE_IP=$(terraform output -json | jq -r '.instance_ip.value' )
@@ -34,8 +37,8 @@ go run client.go $INSTANCE_IP:8081 'ls -la'
 ```shell script
 docker run -it $(docker build -q .)
 cd ~
-export AWS_ACCESS_KEY_ID=AKIATVPVOWKX2HQFBYVC
-export AWS_SECRET_ACCESS_KEY=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
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
 export AWS_DEFAULT_REGION=us-east-1
 aws s3api create-bucket --bucket <S3_BUCKET_NAME> --region us-east-1
 exit
@@ -50,8 +53,8 @@ To create a new AMI out of the latest Amazon Linux AMI, and install the server.g
 ```shell script
 docker run -it $(docker build -q .)
 cd ~
-export AWS_ACCESS_KEY_ID=AKIATVPVOWKX2HQFBYVC
-export AWS_SECRET_ACCESS_KEY=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
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
 export AWS_SOURCE_AMI=ami-0565af6e282977273
 export AWS_REGION=us-east-1
 packer build packer_template.json
