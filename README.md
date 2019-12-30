@@ -21,7 +21,7 @@ export AWS_DEFAULT_REGION=us-east-1
 terraform init
 export aws_ami_id=ami-0ec6d71f90a4daad0
 export git_access_token=
-terraform apply -auto-approve -var "git_access_token=$store_git_access_token" -var "ami_id=$aws_ami_id"
+terraform apply -auto-approve -var "git_access_token=$git_access_token" -var "ami_id=$aws_ami_id"
 export LOCAL_IP=$(curl http://ipv4.icanhazip.com)
 export INSTANCE_IP=$(terraform output -json | jq -r '.instance_ip.value' )
 export SECURITY_GROUP=$(terraform output -json | jq -r '.security_group.value'  )
